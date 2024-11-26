@@ -1,0 +1,51 @@
+schema: '2.0'
+stages:
+  data_cleaning:
+    cmd: python src/data_cleaning.py
+    deps:
+    - path: src/data_cleaning.py
+      hash: md5
+      md5: d6322ab81a577aed87860876ec03b65d
+      size: 4877
+    outs:
+    - path: data/processed/
+      hash: md5
+      md5: 6ffbaaad7b4ac6e1afabed19a80b2560.dir
+      size: 0
+      nfiles: 1
+  Eda_analysis:
+    cmd: python src/eda_analysis.py
+    deps:
+    - path: data/processed/
+      hash: md5
+      md5: 6ffbaaad7b4ac6e1afabed19a80b2560.dir
+      size: 0
+      nfiles: 1
+    - path: src/eda_analysis.py
+      hash: md5
+      md5: f78434b5ca351c756aa98252c7874813
+      size: 5806
+    outs:
+    - path: data/interim/
+      hash: md5
+      md5: 6ffbaaad7b4ac6e1afabed19a80b2560.dir
+      size: 0
+      nfiles: 1
+  Data_splitting:
+    cmd: python src/make_dataset.py
+    deps:
+    - path: data/processed/
+      hash: md5
+      md5: 6ffbaaad7b4ac6e1afabed19a80b2560.dir
+      size: 0
+      nfiles: 1
+    - path: src/make_dataset.py
+      hash: md5
+      md5: f1d3b8b000ecc24d6e936073b9d42b3f
+      size: 2289
+    outs:
+    - path: data/external/
+      hash: md5
+      md5: 6ffbaaad7b4ac6e1afabed19a80b2560.dir
+      size: 0
+      nfiles: 1

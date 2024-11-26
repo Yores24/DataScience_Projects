@@ -1,0 +1,44 @@
+stages:
+  data_cleaning:
+    cmd: python src/data_cleaning.py
+    deps:
+    - src/data_cleaning.py
+   
+    outs:
+    - data/processed/
+
+  Eda_analysis:
+    cmd: python src/eda_analysis.py
+    deps:
+    - data/processed/
+    - src/eda_analysis.py
+    outs:
+    - data/interim/
+
+  Data_splitting:
+    cmd: python src/make_dataset.py
+    deps:
+    - data/processed/
+    - src/make_dataset.py
+  
+    outs:
+    - data/external/
+
+  train:
+    cmd: python src/modeling/train.py 
+    deps:
+    - data/processed/train_final.csv
+    - src/modeling/train.py
+    
+    outs:
+    - models
+    
+  predict:
+    cmd: python src/modeling/predict.py 
+    deps:
+    - data/processed
+    - models
+    - src/modeling/predict.py
+    # metrics:
+    # - reports/train_metrics.json
+    # - reports/test_metrics.json
